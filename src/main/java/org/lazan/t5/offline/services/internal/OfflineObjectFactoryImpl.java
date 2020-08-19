@@ -7,17 +7,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.internal.services.RequestImpl;
 import org.apache.tapestry5.internal.services.ResponseImpl;
-import org.apache.tapestry5.internal.services.TapestrySessionFactory;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.TypeCoercer;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
+import org.apache.tapestry5.services.SessionPersistedObjectAnalyzer;
 import org.lazan.t5.offline.services.OfflineObjectFactory;
 import org.lazan.t5.offline.services.OfflineObjects;
 import org.lazan.t5.offline.services.OfflineResponseGlobals;
@@ -25,13 +26,13 @@ import org.lazan.t5.offline.services.OfflineResponseGlobals;
 public class OfflineObjectFactoryImpl implements OfflineObjectFactory {
 	private final OfflineResponseGlobals offlineResponseGlobals;
 	private final String requestEncoding;
-	private final TapestrySessionFactory sessionFactory;
+	private final SessionPersistedObjectAnalyzer sessionFactory;
 	private final TypeCoercer typeCoercer;
 	
 	public OfflineObjectFactoryImpl(
 			OfflineResponseGlobals offlineResponseGlobals, 
 			@Symbol(SymbolConstants.CHARSET) String requestEncoding,
-			TapestrySessionFactory sessionFactory,
+			SessionPersistedObjectAnalyzer sessionFactory,
 			TypeCoercer typeCoercer) {
 		super();
 		this.offlineResponseGlobals = offlineResponseGlobals;
@@ -75,6 +76,18 @@ public class OfflineObjectFactoryImpl implements OfflineObjectFactory {
 			@Override
 			public void write(int b) throws IOException {
 				out.write(b);
+			}
+
+			@Override
+			public boolean isReady() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public void setWriteListener(WriteListener writeListener) {
+				// TODO Auto-generated method stub
+				
 			}
 		};
 		Map<String, Object> responseValues = new LinkedHashMap<String, Object>(offlineResponseGlobals.getValues());

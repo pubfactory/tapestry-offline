@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,7 +25,7 @@ public class OfflineRequestBuilderImplTest {
 	
 	@Test
 	public void testSession() {
-		when(requestGlobals.getValues()).thenReturn(Collections.emptyMap());
+		when(requestGlobals.getValues()).thenReturn(new HashMap<String, Object>());
 		OfflineRequestBuilder requestBuilder = new OfflineRequestBuilderImpl(requestGlobals, coercer);
 		HttpServletRequest request = requestBuilder.build();
 		
