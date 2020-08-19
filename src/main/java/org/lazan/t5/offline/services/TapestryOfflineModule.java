@@ -1,8 +1,15 @@
 package org.lazan.t5.offline.services;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.tapestry5.SymbolConstants;
+import org.apache.tapestry5.internal.services.CookiesImpl;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
@@ -25,7 +32,10 @@ public class TapestryOfflineModule {
 	}
 	
 	@Contribute(OfflineRequestGlobals.class)
-	public void contributeOfflineRequestGlobals(MappedConfiguration<String, Object> config, ApplicationGlobals applicationGlobals, @Symbol(SymbolConstants.CHARSET) String charset) {
+	public void contributeOfflineRequestGlobals(MappedConfiguration<String, Object> config, 
+			ApplicationGlobals applicationGlobals, 
+			HttpServletRequest httpRequest,
+			@Symbol(SymbolConstants.CHARSET) String charset) {
 		config.add("locale", Locale.getDefault());
 		config.add("secure", false);
 		config.add("servletContext", applicationGlobals.getServletContext());
@@ -33,10 +43,29 @@ public class TapestryOfflineModule {
 		config.add("contentType", "text/html");
 		config.add("protocol", "http");
 		config.add("characterEncoding", charset);
+		config.add("parameterNames", httpRequest.getParameterNames());
+		config.add("requestURI", httpRequest.getRequestURI());
+		config.add("method", httpRequest.getMethod());
+		config.add("queryString", createQueryString(applicationGlobals.getServletContext()));
+		config.add("pathInfo",  httpRequest.getPathInfo());
+		config.add("cookies", httpRequest.getCookies());
+		config.add("remoteAddr", httpRequest.getRemoteAddr());
 	}
 
 	@Contribute(OfflineResponseGlobals.class)
-	public void contributeOfflineResponseGlobals(MappedConfiguration<String, Object> config, @Symbol(SymbolConstants.CHARSET) String charset) {
+	public void contributeOfflineResponseGlobals(MappedConfiguration<String, Object> config, 
+			HttpServletResponse httpResponse,
+			@Symbol(SymbolConstants.CHARSET) String charset) throws IOException {
 		config.add("characterEncoding", charset);
+		config.add("outputStream", httpResponse.getOutputStream());
+	}
+	
+	private String createQueryString(ServletContext servletContext) {
+		String[] urlParts = servletContext.getContextPath().split("\\?");
+		if (urlParts.length > 1) {
+			return new StringBuilder("?").append(urlParts[1]).toString();
+		} else {
+			return "";
+		}
 	}
 }

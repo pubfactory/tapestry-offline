@@ -14,11 +14,25 @@ description = "tapestry-offline"
 
 repositories {
      mavenCentral()
+     maven {
+     	credentials {
+            username mavenUser
+            password mavenPassword
+        }
+        url "https://nexus.pubfactory.com/nexus/content/repositories/releases"
+     }
+     maven {
+     	credentials {
+            username mavenUser
+            password mavenPassword
+        }
+        url "https://nexus.pubfactory.com/nexus/content/repositories/snapshots"
+     }
 }
 
 dependencies {
-    compile 'org.apache.tapestry:tapestry-core:5.4.1'
-    compileOnly 'javax.servlet:servlet-api:2.5'
+    compile 'org.apache.tapestry:tapestry-core:5.2.6.3'
+    compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
     testCompile 'junit:junit:4.4'
     testCompile 'org.eclipse.jetty:jetty-webapp:7.6.17.v20150415'
 	testCompile 'org.mockito:mockito-all:1.10.19'
