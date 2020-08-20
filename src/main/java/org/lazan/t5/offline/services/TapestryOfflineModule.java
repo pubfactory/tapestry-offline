@@ -15,6 +15,7 @@ import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.ApplicationGlobals;
+import org.apache.tapestry5.services.RequestGlobals;
 import org.lazan.t5.offline.services.internal.OfflineComponentRendererImpl;
 import org.lazan.t5.offline.services.internal.OfflineObjectFactoryImpl;
 import org.lazan.t5.offline.services.internal.OfflineRequestBuilderFactoryImpl;
@@ -34,7 +35,7 @@ public class TapestryOfflineModule {
 	@Contribute(OfflineRequestGlobals.class)
 	public void contributeOfflineRequestGlobals(MappedConfiguration<String, Object> config, 
 			ApplicationGlobals applicationGlobals, 
-			HttpServletRequest httpRequest,
+			RequestGlobals requestGlobals,
 			@Symbol(SymbolConstants.CHARSET) String charset) {
 		config.add("locale", Locale.getDefault());
 		config.add("secure", false);
@@ -43,21 +44,28 @@ public class TapestryOfflineModule {
 		config.add("contentType", "text/html");
 		config.add("protocol", "http");
 		config.add("characterEncoding", charset);
-		config.add("parameterNames", httpRequest.getParameterNames());
-		config.add("requestURI", httpRequest.getRequestURI());
-		config.add("method", httpRequest.getMethod());
 		config.add("queryString", createQueryString(applicationGlobals.getServletContext()));
-		config.add("pathInfo",  httpRequest.getPathInfo());
-		config.add("cookies", httpRequest.getCookies());
-		config.add("remoteAddr", httpRequest.getRemoteAddr());
+		
+		HttpServletRequest httpRequest = requestGlobals.getHTTPServletRequest();
+		if (httpRequest != null) {
+			config.add("parameterNames", httpRequest.getParameterNames());
+			config.add("requestURI", httpRequest.getRequestURI());
+			config.add("method", httpRequest.getMethod());		
+			config.add("pathInfo",  httpRequest.getPathInfo());
+			config.add("cookies", httpRequest.getCookies());
+			config.add("remoteAddr", httpRequest.getRemoteAddr());
+		}
 	}
 
 	@Contribute(OfflineResponseGlobals.class)
 	public void contributeOfflineResponseGlobals(MappedConfiguration<String, Object> config, 
-			HttpServletResponse httpResponse,
+			RequestGlobals requestGlobals,
 			@Symbol(SymbolConstants.CHARSET) String charset) throws IOException {
 		config.add("characterEncoding", charset);
-		config.add("outputStream", httpResponse.getOutputStream());
+		HttpServletResponse httpResponse = requestGlobals.getHTTPServletResponse();
+		if (httpResponse != null) {
+			config.add("outputStream", httpResponse.getOutputStream());
+		}
 	}
 	
 	private String createQueryString(ServletContext servletContext) {
