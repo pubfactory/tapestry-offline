@@ -1,15 +1,12 @@
 package org.lazan.t5.offline.services;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tapestry5.SymbolConstants;
-import org.apache.tapestry5.internal.services.CookiesImpl;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
@@ -45,16 +42,10 @@ public class TapestryOfflineModule {
 		config.add("protocol", "http");
 		config.add("characterEncoding", charset);
 		config.add("queryString", createQueryString(applicationGlobals.getServletContext()));
-		
-		HttpServletRequest httpRequest = requestGlobals.getHTTPServletRequest();
-		if (httpRequest != null) {
-			config.add("parameterNames", httpRequest.getParameterNames());
-			config.add("requestURI", httpRequest.getRequestURI());
-			config.add("method", httpRequest.getMethod());		
-			config.add("pathInfo",  httpRequest.getPathInfo());
-			config.add("cookies", httpRequest.getCookies());
-			config.add("remoteAddr", httpRequest.getRemoteAddr());
-		}
+
+		// if you want to add info from the HttpServletRequest into the config map, do so in
+		// the arachne OfflineRenderingServiceImpl.getOfflineRequest method as it will allow
+		// null values and sometimes the request has nulls (request.getPathInfo(), etc.).
 	}
 
 	@Contribute(OfflineResponseGlobals.class)
