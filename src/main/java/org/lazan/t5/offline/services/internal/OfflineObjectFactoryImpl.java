@@ -3,6 +3,7 @@ package org.lazan.t5.offline.services.internal;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import org.apache.tapestry5.services.SessionPersistedObjectAnalyzer;
 import org.lazan.t5.offline.services.OfflineObjectFactory;
 import org.lazan.t5.offline.services.OfflineObjects;
 import org.lazan.t5.offline.services.OfflineResponseGlobals;
+import org.lazan.t5.offline.services.internal.ProxyBuilder.MethodHandler;
 
 public class OfflineObjectFactoryImpl implements OfflineObjectFactory {
 	private final OfflineResponseGlobals offlineResponseGlobals;
@@ -91,7 +93,18 @@ public class OfflineObjectFactoryImpl implements OfflineObjectFactory {
 			}
 		};
 		Map<String, Object> responseValues = new LinkedHashMap<String, Object>(offlineResponseGlobals.getValues());
-		responseValues.put("outputStream", servletOut);
-		return new ProxyBuilder(typeCoercer).withDefaultValues(responseValues).build(HttpServletResponse.class);
+
+        MethodHandler encodeUrlHandler = new MethodHandler() {
+            @Override
+            public Object handle(Method method, Object[] args) {
+                return args[0];
+            }
+        };
+
+        responseValues.put("outputStream", servletOut);
+		return new ProxyBuilder(typeCoercer)
+		        .withMethodHandler("encodeURL", encodeUrlHandler)
+		        .withDefaultValues(responseValues)
+		        .build(HttpServletResponse.class);
 	}
 }
