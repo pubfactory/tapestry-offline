@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.internal.services.RequestImpl;
 import org.apache.tapestry5.internal.services.ResponseImpl;
+import org.apache.tapestry5.internal.services.TapestrySessionFactory;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.TypeCoercer;
 import org.apache.tapestry5.services.Request;
@@ -28,19 +29,18 @@ import org.lazan.t5.offline.services.internal.ProxyBuilder.MethodHandler;
 public class OfflineObjectFactoryImpl implements OfflineObjectFactory {
 	private final OfflineResponseGlobals offlineResponseGlobals;
 	private final String requestEncoding;
-	private final SessionPersistedObjectAnalyzer sessionFactory;
 	private final TypeCoercer typeCoercer;
+	private final TapestrySessionFactory tapestrySessionFactory;
 	
 	public OfflineObjectFactoryImpl(
 			OfflineResponseGlobals offlineResponseGlobals, 
 			@Symbol(SymbolConstants.CHARSET) String requestEncoding,
-			SessionPersistedObjectAnalyzer sessionFactory,
-			TypeCoercer typeCoercer) {
+			TypeCoercer typeCoercer, TapestrySessionFactory tapestrySessionFactory) {
 		super();
 		this.offlineResponseGlobals = offlineResponseGlobals;
 		this.requestEncoding = requestEncoding;
-		this.sessionFactory = sessionFactory;
 		this.typeCoercer = typeCoercer;
+		this.tapestrySessionFactory = tapestrySessionFactory;
 	}
 	
 	@Override
@@ -60,7 +60,7 @@ public class OfflineObjectFactoryImpl implements OfflineObjectFactory {
 	}
 	
 	protected Request createRequest(HttpServletRequest httpRequest) {
-		return new RequestImpl(httpRequest, requestEncoding, sessionFactory);
+		return new RequestImpl(httpRequest, requestEncoding, tapestrySessionFactory);
 	}
 	
 	protected Response createResponse(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
