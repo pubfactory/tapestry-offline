@@ -1,6 +1,6 @@
 package org.lazan.t5.offline.demo.services;
 
-import org.apache.tapestry5.ioc.MappedConfiguration;
+import org.apache.tapestry5.commons.MappedConfiguration;
 import org.apache.tapestry5.ioc.annotations.SubModule;
 import org.lazan.t5.offline.services.TapestryOfflineModule;
 

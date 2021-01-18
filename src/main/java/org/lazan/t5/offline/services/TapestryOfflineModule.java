@@ -7,12 +7,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tapestry5.SymbolConstants;
-import org.apache.tapestry5.ioc.MappedConfiguration;
+import org.apache.tapestry5.commons.MappedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.apache.tapestry5.services.ApplicationGlobals;
-import org.apache.tapestry5.services.RequestGlobals;
+import org.apache.tapestry5.http.services.ApplicationGlobals;
+import org.apache.tapestry5.http.services.RequestGlobals;
 import org.lazan.t5.offline.services.internal.OfflineComponentRendererImpl;
 import org.lazan.t5.offline.services.internal.OfflineObjectFactoryImpl;
 import org.lazan.t5.offline.services.internal.OfflineRequestBuilderFactoryImpl;

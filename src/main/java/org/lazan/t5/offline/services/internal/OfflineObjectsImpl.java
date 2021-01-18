@@ -2,8 +2,8 @@ package org.lazan.t5.offline.services.internal;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tapestry5.services.Request;
-import org.apache.tapestry5.services.Response;
+import org.apache.tapestry5.http.services.Request;
+import org.apache.tapestry5.http.services.Response;
 import org.lazan.t5.offline.services.OfflineObjects;
 
 public class OfflineObjectsImpl implements OfflineObjects {

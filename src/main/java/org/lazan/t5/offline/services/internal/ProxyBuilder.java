@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.tapestry5.ioc.services.TypeCoercer;
+import org.apache.tapestry5.commons.services.TypeCoercer;
 
 public class ProxyBuilder {
 	private final TypeCoercer typeCoercer;

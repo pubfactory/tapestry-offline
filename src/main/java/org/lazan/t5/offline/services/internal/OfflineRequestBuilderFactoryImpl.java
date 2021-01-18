@@ -1,6 +1,6 @@
 package org.lazan.t5.offline.services.internal;
 
-import org.apache.tapestry5.ioc.services.TypeCoercer;
+import org.apache.tapestry5.commons.services.TypeCoercer;
 import org.lazan.t5.offline.services.OfflineRequestBuilder;
 import org.lazan.t5.offline.services.OfflineRequestBuilderFactory;
 import org.lazan.t5.offline.services.OfflineRequestGlobals;

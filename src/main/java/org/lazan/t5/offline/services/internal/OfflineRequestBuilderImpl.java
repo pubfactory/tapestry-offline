@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.tapestry5.ioc.services.TypeCoercer;
+import org.apache.tapestry5.commons.services.TypeCoercer;
 import org.lazan.t5.offline.services.OfflineRequestBuilder;
 import org.lazan.t5.offline.services.OfflineRequestGlobals;
 import org.lazan.t5.offline.services.internal.ProxyBuilder.MethodHandler;

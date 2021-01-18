@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.ComponentEventRequestParameters;
 import org.apache.tapestry5.services.PageRenderRequestParameters;
-import org.apache.tapestry5.services.Response;
+import org.apache.tapestry5.http.services.Response;
 
 /**
  * Renders pages and components in situations that were not triggered by a HTTPServletRequest

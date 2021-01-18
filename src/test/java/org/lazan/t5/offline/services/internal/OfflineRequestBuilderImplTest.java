@@ -11,7 +11,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tapestry5.ioc.services.TypeCoercer;
+import org.apache.tapestry5.commons.services.TypeCoercer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lazan.t5.offline.services.OfflineRequestBuilder;

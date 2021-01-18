@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.lazan</groupId>
 	<artifactId>tapestry-offline</artifactId>
-	<version>0.0.5</version>
+	<version>0.0.6-SNAPSHOT</version>
 	
 	<build>
 		<pluginManagement>
@@ -44,7 +44,7 @@
 		<dependency>
 			<groupId>org.apache.tapestry</groupId>
 			<artifactId>tapestry-core</artifactId>
-			<version>5.6.1</version>
+			<version>5.7.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
         <dependency>
