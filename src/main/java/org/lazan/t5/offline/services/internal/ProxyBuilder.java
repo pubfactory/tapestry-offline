@@ -6,6 +6,8 @@ import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
 
 import org.apache.tapestry5.commons.services.TypeCoercer;
 
@@ -59,6 +61,8 @@ public class ProxyBuilder {
 						Object value = defaultValues.get(propName);
 						return typeCoercer.coerce(value, method.getReturnType());
 					}
+				} else if (methodName.equals("hashCode") && method.getParameterCount() == 0) {
+				    return Objects.hash(this);
 				}
 				throw new RuntimeException(String.format("Unhandeled method %s.%s(%s)", type.getSimpleName(), method.getName(), Arrays.toString(args)));
 			}
