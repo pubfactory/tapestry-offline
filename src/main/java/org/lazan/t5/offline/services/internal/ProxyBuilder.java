@@ -49,6 +49,8 @@ public class ProxyBuilder {
 				} else  if (defaultValues.containsKey(methodName)) {
 					Object value = defaultValues.get(methodName);
 					return typeCoercer.coerce(value, method.getReturnType());
+				} else if (methodName.equals("getId")) {
+					return null;
 				} else if (methodName.startsWith("get")) {
 					String propName = Character.toLowerCase(methodName.charAt(3)) + methodName.substring(4);
 					if (defaultValues.containsKey(propName)) {
