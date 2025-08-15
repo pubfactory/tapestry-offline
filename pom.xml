@@ -88,11 +88,11 @@
 	<distributionManagement>
 		<repository>
 			<id>ifactory-releases</id>
-			<url>https://nexus.pubfactory.com/nexus/content/repositories/releases</url>
+			<url>https://nexus.dev.pubfactory.net/nexus/content/repositories/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>ifactory-snapshots</id>
-			<url>https://nexus.pubfactory.com/nexus/content/repositories/snapshots</url>
+			<url>https://nexus.dev.pubfactory.net/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
